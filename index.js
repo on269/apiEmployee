@@ -33,7 +33,7 @@ app.post('/employees', (req, res) => {
   res.json(newEmployee); // ส่งข้อมูลของพนักงานใหม่ที่ถูกเพิ่ม
 });
 
-app.get('/employees', (req, res) => {
+app.get('/', (req, res) => {
   res.json(employeeData.employee);
 });
 
