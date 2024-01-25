@@ -37,18 +37,6 @@ app.get('/employees', (req, res) => {
   res.json(employeeData.employee);
 });
 
-app.post('/employees', (req, res) => {
-  const lastEmployeeId = employeeData.employee.length > 0 ? employeeData.employee[employeeData.employee.length - 1].id : 0;
-  const newEmployeeId = lastEmployeeId + 1;
-
-  const newEmployee = req.body;
-  newEmployee.id = newEmployeeId;
-
-  employeeData.employee.push(newEmployee);
-
-  res.json(newEmployee);
-});
-
 app.put('/employees/:id', (req, res) => {
   const employeeId = parseInt(req.params.id);
   const updatedEmployee = req.body;
