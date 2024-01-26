@@ -17,7 +17,12 @@ app.get('/employee/:id', (req, res) => {
     res.status(404).json({ message: 'Employee not found' }); // ส่งข้อความว่าพนักงานไม่พบเมื่อไม่พบ ID ที่ร้องขอ
   }
 });
-app.get('/localTime', (req, res) => {
+
+app.post('/employees', (req, res) => {
+  const lastEmployeeId = employeeData.employee.length > 0 ? employeeData.employee[employeeData.employee.length - 1].id : 0;
+  const newEmployeeId = lastEmployeeId + 1;
+
+  // Add the current time
   const localTime = new Date().toLocaleTimeString("en-US", {
     timeZone: "Asia/Bangkok",
     hour12: false,
@@ -26,22 +31,17 @@ app.get('/localTime', (req, res) => {
     second: "numeric",
   });
 
-  res.json({ localTime });
+  // Assuming you want to do something with the new employee and time here
+  // For example, you can save the new employee along with the current time to your data
+
+  // Respond with a confirmation or the new employee data including the time
+  res.json({ 
+    message: 'Employee added successfully',
+    newEmployeeId,
+    localTime 
+  });
 });
 
-app.post('/employees', (req, res) => {
-  const lastEmployeeId = employeeData.employee.length > 0 ? employeeData.employee[employeeData.employee.length - 1].id : 0;
-  const newEmployeeId = lastEmployeeId + 1;
-
-  const newEmployee = req.body;
-  newEmployee.id = newEmployeeId;
-  newEmployee.date = new Date().toISOString().split('T')[0]; // Add the current date
-  newEmployee.time = new Date().toLocaleTimeString("en-US", {
-    hour12: false,
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  }); // Add the current time
 
   // Set the section to "ส่วนอำนวยการ" if not provided
   newEmployee.section = newEmployee.section || "ส่วนอำนวยการ";
