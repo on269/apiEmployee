@@ -25,14 +25,17 @@ app.post('/employees', (req, res) => {
   const newEmployee = req.body;
   newEmployee.id = newEmployeeId;
 
+  // Add the current date and section
+  newEmployee.date = new Date().toISOString().split('T')[0];
+  newEmployee.section = req.body.section; // Assuming the section is sent in the request
+
   employeeData.employee.push(newEmployee);
 
-  // บันทึกข้อมูลลงในไฟล์ employee.json (ต้องการการจัดการไฟล์แบบอื่น เช่น fs)
+  // Save data to the employee.json file (you need to implement file handling)
   // ...
 
-  res.json(newEmployee); // ส่งข้อมูลของพนักงานใหม่ที่ถูกเพิ่ม
+  res.json(newEmployee);
 });
-
 app.get('/', (req, res) => {
   res.json(employeeData.employee);
 });
@@ -44,10 +47,11 @@ app.put('/employees/:id', (req, res) => {
   const employeeToUpdate = employeeData.employee.find(emp => emp.id === employeeId);
 
   if (employeeToUpdate) {
-    // ทำการอัปเดตข้อมูลพนักงาน
+    // Update employee data including the section
     Object.assign(employeeToUpdate, updatedEmployee);
+    employeeToUpdate.section = req.body.section; // Assuming the section is sent in the request
 
-    // บันทึกข้อมูลลงในไฟล์ employee.json (ต้องการการจัดการไฟล์แบบอื่น เช่น fs)
+    // Save data to the employee.json file (you need to implement file handling)
     // ...
 
     res.json(employeeToUpdate);
