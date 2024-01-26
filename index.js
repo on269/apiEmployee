@@ -22,26 +22,15 @@ app.post('/employees', (req, res) => {
   const lastEmployeeId = employeeData.employee.length > 0 ? employeeData.employee[employeeData.employee.length - 1].id : 0;
   const newEmployeeId = lastEmployeeId + 1;
 
-  // Add the current time
-  const localTime = new Date().toLocaleTimeString("en-US", {
-    timeZone: "Asia/Bangkok",
-    hour12: false,
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  });
+  // Assuming you want to do something with the new employee here
+  // For example, you can save the new employee to your data
 
-  // Assuming you want to do something with the new employee and time here
-  // For example, you can save the new employee along with the current time to your data
-
-  // Respond with a confirmation or the new employee data including the time
+  // Respond with a confirmation or the new employee data
   res.json({ 
     message: 'Employee added successfully',
     newEmployeeId,
-    localTime 
   });
 });
-
 
   // Set the section to "ส่วนอำนวยการ" if not provided
   newEmployee.section = newEmployee.section || "ส่วนอำนวยการ";
