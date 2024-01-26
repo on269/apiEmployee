@@ -20,26 +20,24 @@ app.get('/employee/:id', (req, res) => {
 
 app.post('/employees', (req, res) => {
   const lastEmployeeId = employeeData.employee.length > 0 ? employeeData.employee[employeeData.employee.length - 1].id : 0;
-  const newEmployeeId = lastEmployeeId + 1;
+   const newEmployee = req.body;
+  newEmployee.id = newEmployeeId;
+  newEmployee.date = new Date().toISOString().split('T')[0]; // เพิ่มบรรทัดนี้เพื่อให้ระบบใส่วันปัจจุบัน
 
-  // Assuming you want to do something with the new employee here
-  // For example, you can save the new employee to your data
-
-  // Respond with a confirmation or the new employee data
-  res.json({ 
-    message: 'Employee added successfully',
-    newEmployeeId,
-  });
-});
-
-  // Set the section to "ส่วนอำนวยการ" if not provided
-  newEmployee.section = newEmployee.section || "ส่วนอำนวยการ";
+  // Add the current date and section
+  newEmployee.date = new Date().toISOString().split('T')[0];
+  newEmployee.section = req.body.section; // Assuming the section is sent in the request
+  // เพิ่ม section เป็นส่วนอำนวยการ
+  newEmployee.section = "ส่วนอำนวยการ";
 
   employeeData.employee.push(newEmployee);
 
-  // ... (save data to the employee.json file or database)
+  // Save data to the employee.json file (you need to implement file handling)
+  // บันทึกข้อมูลลงในไฟล์ employee.json (ต้องการการจัดการไฟล์แบบอื่น เช่น fs)
+  // ...
 
-  res.json(newEmployee); // Send the data of the newly added employee
+  res.json(newEmployee);
+  res.json(newEmployee); // ส่งข้อมูลของพนักงานใหม่ที่ถูกเพิ่ม
 });
 app.get('/', (req, res) => {
   res.json(employeeData.employee);
