@@ -24,17 +24,22 @@ app.post('/employees', (req, res) => {
 
   const newEmployee = req.body;
   newEmployee.id = newEmployeeId;
-  newEmployee.date = new Date().toISOString().split('T')[0]; // เพิ่มบรรทัดนี้เพื่อให้ระบบใส่วันปัจจุบัน
+  newEmployee.date = new Date().toISOString().split('T')[0]; // Add the current date
+  newEmployee.time = new Date().toLocaleTimeString("en-US", {
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  }); // Add the current time
 
-  // เพิ่ม section เป็นส่วนอำนวยการ
-  newEmployee.section = "ส่วนอำนวยการ";
+  // Set the section to "ส่วนอำนวยการ" if not provided
+  newEmployee.section = newEmployee.section || "ส่วนอำนวยการ";
 
   employeeData.employee.push(newEmployee);
 
-  // บันทึกข้อมูลลงในไฟล์ employee.json (ต้องการการจัดการไฟล์แบบอื่น เช่น fs)
-  // ...
+  // ... (save data to the employee.json file or database)
 
-  res.json(newEmployee); // ส่งข้อมูลของพนักงานใหม่ที่ถูกเพิ่ม
+  res.json(newEmployee); // Send the data of the newly added employee
 });
 app.get('/', (req, res) => {
   res.json(employeeData.employee);
