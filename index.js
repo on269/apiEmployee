@@ -24,17 +24,17 @@ app.post('/employees', (req, res) => {
 
   const newEmployee = req.body;
   newEmployee.id = newEmployeeId;
+  newEmployee.date = new Date().toISOString().split('T')[0]; // เพิ่มบรรทัดนี้เพื่อให้ระบบใส่วันปัจจุบัน
 
-  // Add the current date and section
-  newEmployee.date = new Date().toISOString().split('T')[0];
-  newEmployee.section = req.body.section; // Assuming the section is sent in the request
+  // เพิ่ม section เป็นส่วนอำนวยการ
+  newEmployee.section = "ส่วนอำนวยการ";
 
   employeeData.employee.push(newEmployee);
 
-  // Save data to the employee.json file (you need to implement file handling)
+  // บันทึกข้อมูลลงในไฟล์ employee.json (ต้องการการจัดการไฟล์แบบอื่น เช่น fs)
   // ...
 
-  res.json(newEmployee);
+  res.json(newEmployee); // ส่งข้อมูลของพนักงานใหม่ที่ถูกเพิ่ม
 });
 app.get('/', (req, res) => {
   res.json(employeeData.employee);
