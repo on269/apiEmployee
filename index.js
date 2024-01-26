@@ -17,6 +17,17 @@ app.get('/employee/:id', (req, res) => {
     res.status(404).json({ message: 'Employee not found' }); // ส่งข้อความว่าพนักงานไม่พบเมื่อไม่พบ ID ที่ร้องขอ
   }
 });
+app.get('/localTime', (req, res) => {
+  const localTime = new Date().toLocaleTimeString("en-US", {
+    timeZone: "Asia/Bangkok",
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  });
+
+  res.json({ localTime });
+});
 
 app.post('/employees', (req, res) => {
   const lastEmployeeId = employeeData.employee.length > 0 ? employeeData.employee[employeeData.employee.length - 1].id : 0;
